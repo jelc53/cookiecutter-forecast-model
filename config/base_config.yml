@@ -1,0 +1,29 @@
+data:
+  raw_data:
+    base_directory: "artefacts/input/raw_data/"
+    tables:
+      icw_maintenance_backward: "icw_data.json"
+      icw_maintenance_forward:
+      sap_maintenance_backward:
+      sap_maintenance_forward:
+      mm_maintenance_backward:
+      mm_maintenance_forward:
+  processed_data:
+    base_directory: "artefacts/input/processed_data/"
+    tables:
+        dummy_maintenance: 'dummy_maintenance.parquet'
+  output_data:
+    base_directory: "artefacts/output/modeling/"
+    tables:
+      dummy_modeling: 'dummy_modeling.parquet'
+
+
+pipelines:
+  dummy_data_cube:
+    tasks:
+      create_dummy_processing: True
+  dummy_modeling:
+    tasks:
+      create_dummy_modeling: True
+
+run_details: {}  # data input version (needed for gamma data manager)
