@@ -19,5 +19,4 @@ make setup
 
 ## Documentation
 
-# ToDo The full documentation is accessible here :
-
+todo
