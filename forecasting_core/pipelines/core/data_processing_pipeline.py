@@ -2,13 +2,15 @@ import logging
 from typing import Dict
 
 from ac_availability_core.pipelines.core.base_pipeline import Pipeline
-from ac_availability_core.tasks.dummy_tasks.processing.dummy_data_cube import CreateDummyDataCube
+from ac_availability_core.tasks.dummy_tasks.process_data import ProcessDummyDataset
 
 logger = logging.getLogger(__name__)
 
 
-class DummyDataCubePipeline(Pipeline):
-    name = "dummy_data_cube"
+class DataProcessingPipeline(Pipeline):
+    """Data processing pipeline."""
+
+    name = "data_processing_pipeline"
 
     def __init__(self, config: Dict):
         self._tasks = self.get_tasks(config)
@@ -19,5 +21,7 @@ class DummyDataCubePipeline(Pipeline):
         }
 
     def get_tasks(self, config):
-        pipeline_config = config.pipelines.dummy_data_cube.tasks
-        return ((CreateDummyDataCube, pipeline_config.create_dummy_processing),)
+        pipeline_config = config.pipelines.data_processing.tasks
+        return (
+            (ProcessDummyDataset, pipeline_config.process_dummy_data),
+        )
