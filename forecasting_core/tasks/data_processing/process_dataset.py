@@ -9,10 +9,10 @@ from ac_availability_core.utils.data_loading_and_writing import read_file, write
 logger = logging.getLogger(__name__)
 
 
-class ProcessDummyDataset(Task):
+class ProcessDataset(Task):
     """Loads raw data and outputs it."""
 
-    name = "process_dummy_dataset"
+    name = "process_dataset"
 
     def __init__(
         self,
