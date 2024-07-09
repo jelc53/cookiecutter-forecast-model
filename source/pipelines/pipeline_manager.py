@@ -3,7 +3,6 @@ from typing import Dict
 # import pipelines here
 from source.pipelines.core.data_processing_pipeline import DataProcessingPipeline
 from source.pipelines.core.forecast_model_pipeline import ForecastModelPipeline
-# from source.pipelines.core.optimisation_pipeline import OptimisationPipeline
 
 # build a registry of known pipeline.
 PIPELINE_REGISTRY = {cls.name: cls for cls in [DataProcessingPipeline, ForecastModelPipeline]}

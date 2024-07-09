@@ -1,5 +1,5 @@
-# cookiecutter_model
-Template codebase for forecasting and optimisation models. 
+# cookiecutter_forecast_model
+Template codebase for forecasting models, including support for bayesian (stan, pymc) and traditional machine learning (sklearn) frameworks. 
 
 
 ## Poetry installation
@@ -109,7 +109,6 @@ Data processing configuration :
         "--config", "configs/pipelines.yml",
         "--config", "configs/data_processing.yml",
         "--config", "configs/forecast_model.yml",
-        "--config", "configs/optimisation.yml",
         "--raw-data-version", "testing",
         "--processed-data-version", "testing",  // comment to timestamp output
     ]

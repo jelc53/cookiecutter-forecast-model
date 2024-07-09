@@ -22,7 +22,6 @@
                 "--config", "configs/directories.yml",
                 "--config", "configs/data_processing.yml",
                 "--config", "configs/forecast_model.yml",
-                "--config", "configs/optimisation.yml",
                 "--raw-data-version", "testing",
                 "--processed-data-version", "testing",
             ]
@@ -45,7 +44,6 @@
                 "--config", "configs/directories.yml",
                 "--config", "configs/data_processing.yml",
                 "--config", "configs/forecast_model.yml",
-                "--config", "configs/optimisation.yml",
                 "--processed-data-version", "testing",
                 "--run-version", "testing",
             ]
