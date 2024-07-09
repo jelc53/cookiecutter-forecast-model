@@ -1,7 +1,7 @@
 pipelines:
   data_processing:
     tasks:
-      process_dataset: True
+      process_dummy_data: True
   forecast_model:
     tasks:
       feature_engineering: True

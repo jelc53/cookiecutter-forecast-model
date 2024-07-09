@@ -2,7 +2,7 @@ import logging
 from typing import Dict
 
 from source.pipelines.core.base_pipeline import Pipeline
-from source.tasks.data_processing.process_dataset import ProcessDataset
+from source.tasks.data_processing.process_dummy_data import ProcessDummyData
 
 logger = logging.getLogger(__name__)
 
@@ -22,4 +22,4 @@ class DataProcessingPipeline(Pipeline):
 
     def get_tasks(self, config):
         pipeline_config = config.pipelines.data_processing.tasks
-        return (ProcessDataset, pipeline_config.process_dataset)
+        return (ProcessDummyData, pipeline_config.process_dummy_data)

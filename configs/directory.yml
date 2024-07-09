@@ -2,7 +2,7 @@ data:
   raw_data:
     base_directory: "artefacts/input/raw_data/"
     tables:
-      raw_data: "dummy_data.csv"
+      dummy_data: "dummy_data.csv"
   processed_data:
     base_directory: "artefacts/input/processed_data/"
     tables:

@@ -17,7 +17,7 @@ class BaseSchema(pa.SchemaModel):
     def primary_key(cls):
         """."""
         return []
- 
+
     @classmethod
     def enum(cls):
         """."""
@@ -45,8 +45,8 @@ class BaseSchema(pa.SchemaModel):
 
     @classmethod
     def get_columns(cls) -> Dict[str, pa.Field]:
-        """Return expanded column dictonary."""
-        return {k: v.dtype.type for k, v in cls.to_schema().columns.items()}
+        """Return expanded column dictionary."""
+        return {k: v for k, v in cls.to_schema().columns.items()}
 
     @classmethod
     def get_column_names(cls) -> List[str]:
@@ -59,34 +59,38 @@ class BaseSchema(pa.SchemaModel):
         return [v for _, v in cls.get_columns().items()]
 
     @classmethod
+    def handle_missing_columns(cls, data: pd.DataFrame) -> pd.DataFrame:
+        """Add missing optional columns and check for missing required columns."""
+        data = data.copy()
+        for name, field in cls.get_columns().items():
+            col_type = field.dtype.type
+            if field.nullable:
+                if name not in data.columns:
+                    if col_type == int or col_type == float:
+                        data[name] = pd.Series([np.NaN] * len(data), dtype=col_type)
+                    else:  # str, bool
+                        data[name] = pd.Series([None] * len(data), dtype=col_type)
+            else:
+                if name not in data.columns:
+                    raise ValueError(f"Missing required column: {name}")
+        return data
+
+    @classmethod
     def cast(cls, data: pd.DataFrame) -> pd.DataFrame:
         """Cast columns to target column types defined in Column class."""
-        data = data.copy()
-        for name, type in cls.get_columns().items():
+        for name, field in cls.get_columns().items():
             col = name
-            col_type = type
+            col_type = field.dtype.type
             if col in data.columns:
                 if col_type == str:
-                    data[col] = (
-                        data[col]
-                        .replace({np.nan: None})
-                        .astype(col_type)
-                        .replace({"None": None})
-                    )
+                    data[col] = data[col].replace({np.nan: None}).astype(col_type).replace({"None": None})
                 elif col_type == int:
-                    # Using Int64Dtype to handle null values
-                    # and avoid conversion to float
-                    data[col] = np.floor(
-                        pd.to_numeric(data[col], errors="coerce")
-                    ).astype(pd.Int64Dtype())
+                    # Using Int64Dtype to handle null values and avoid conversion to float
+                    data[col] = np.floor(pd.to_numeric(data[col], errors="coerce")).astype(pd.Int64Dtype())
                 elif col_type == float:
-                    data[col] = pd.to_numeric(data[col], errors="coerce").astype(
-                        pd.Float64Dtype()
-                    )
+                    data[col] = pd.to_numeric(data[col], errors="coerce").astype(pd.Float64Dtype())
                 elif (col_type == bool) and (data[col].dtypes == object):
-                    data[col] = (
-                        data[col].fillna("False").astype(str).str.lower() == "true"
-                    )
+                    data[col] = data[col].fillna("False").astype(str).str.lower() == "true"
                 else:
                     data[col] = data[col].astype(col_type)
         return data
@@ -97,16 +101,14 @@ class BaseSchema(pa.SchemaModel):
         super().validate(data, **kwargs)
         cls.check_primary_key(data)
         cls.check_enum_values(data)
- 
+
     @classmethod
     def check_primary_key(cls, data: pd.DataFrame) -> None:
         """Check if primary constraint is verified."""
         if cls.primary_key():
             is_unique = not data.duplicated(cls.get_primary_key()).sum()
             if not is_unique:
-                raise PrimaryKeyError(
-                    f"{cls._label} - Primary key: {cls.get_primary_key()} is not unique"
-                )
+                raise PrimaryKeyError(f"{cls._label} - Primary key: {cls.get_primary_key()} is not unique")
 
     @classmethod
     def check_enum_values(cls, data: pd.DataFrame) -> None:
@@ -116,10 +118,8 @@ class BaseSchema(pa.SchemaModel):
             col_values = col_values.difference([None, "None", np.nan])
 
             if not col_values.issubset(set(v)):
-                raise ValueError(
-                    f"{cls._label} - Invalid values for column"
-                    + f"{k}: {col_values.difference(set(v))}"
-                )
+                raise ValueError(f"{cls._label} - Invalid values for column" + f"{k}: {col_values.difference(set(v))}")
+
 
 class EnumSchema(str, Enum):
     """Base EnumSchema class."""
@@ -137,7 +137,11 @@ class EnumSchema(str, Enum):
         """
         return str.__str__(self)
 
+
 """Custom exceptions related to schemas."""
+
+
 class PrimaryKeyError(Exception):
     """Primary key constraint can't be verified."""
+
     pass
