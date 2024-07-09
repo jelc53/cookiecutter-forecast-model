@@ -1,9 +1,9 @@
 import logging
 from typing import Dict
 
-from ac_availability_core.tasks.base_task import Task
+from source.tasks.base_task import Task
 
-from ac_availability_core.utils.data_loading_and_writing import read_file, write_file
+from source.utils.data_loading_and_writing import read_file, write_file
 
 logger = logging.getLogger(__name__)
 

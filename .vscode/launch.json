@@ -1,0 +1,54 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "data processing",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/source/run.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "PYDEVD_DISABLE_FILE_VALIDATION": "1"
+            },
+            "args": [
+                "--pipeline", "data_processing",
+                "--config", "configs/run_details.yml",
+                "--config", "configs/pipelines.yml",
+                "--config", "configs/directories.yml",
+                "--config", "configs/data_processing.yml",
+                "--config", "configs/forecast_model.yml",
+                "--config", "configs/optimisation.yml",
+                "--raw-data-version", "testing",
+                "--processed-data-version", "testing",
+            ]
+        },
+        {
+            "name": "forecast model",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/source/run.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "PYDEVD_DISABLE_FILE_VALIDATION": "1"
+            },
+            "args": [
+                "--pipeline", "forecast_model",
+                "--config", "configs/run_details.yml",
+                "--config", "configs/pipelines.yml",
+                "--config", "configs/directories.yml",
+                "--config", "configs/data_processing.yml",
+                "--config", "configs/forecast_model.yml",
+                "--config", "configs/optimisation.yml",
+                "--processed-data-version", "testing",
+                "--run-version", "testing",
+            ]
+        },
+    ]
+}

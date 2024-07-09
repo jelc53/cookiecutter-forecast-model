@@ -1,13 +1,12 @@
 import logging
 import click
-from datetime import datetime
 from typing import List, Tuple, Union
 
-import ac_availability_core.constant.name as n
-from ac_availability_core.utils.parser import read_yaml_files
-from ac_availability_core.utils.setup import setup_logging
-from ac_availability_core.pipelines.pipeline_manager import run_pipeline
-from ac_availability_core.utils.versioning import (
+import source.constant.name as n
+from source.utils.parser import read_yaml_files
+from source.utils.setup import setup_logging
+from source.pipelines.pipeline_manager import run_pipeline
+from source.utils.versioning import (
     get_versioning_in_config,
     save_config_as_yml,
 )
@@ -15,11 +14,10 @@ from ac_availability_core.utils.versioning import (
 
 # Set up the logger
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO,
-                     format='%(asctime)s %(levelname)s %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 
 DEFAULT_CONFIG_FILES = [
-    "config/*.yml",
+    "configs/*.yml",
 ]
 @click.command()
 @click.option(
@@ -50,7 +48,6 @@ def main(
     config: Union[Tuple[str], List[str]],
     run_version: str,
     processed_data_version: str,
-    raw_data_version: str,
     verbose: bool,
 ):
     setup_logging(verbose=verbose)
@@ -61,7 +58,6 @@ def main(
         n.F_PIPELINE: pipeline,
         n.F_RUN_VERSION: run_version,
         n.F_PROCESSED_DATA_VERSION: processed_data_version,
-        n.F_RAW_DATA_VERSION: raw_data_version,
     }
     config = get_versioning_in_config(run_info=run_info, config=config)
 

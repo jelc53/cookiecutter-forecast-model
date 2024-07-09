@@ -2,7 +2,7 @@ import json
 import logging
 import os
 import pickle
-from typing import Any, Dict, Tuple
+from typing import Any, Dict
 
 import arviz as az
 import pandas as pd
@@ -10,7 +10,7 @@ from box import Box
 from matplotlib.figure import Figure
 from unidecode import unidecode
 
-from adk_engine.schema.base_schema import BaseSchema
+from source.schema.base_schema import BaseSchema
 
 logger = logging.getLogger(__name__)
 

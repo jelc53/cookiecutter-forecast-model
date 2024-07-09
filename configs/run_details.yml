@@ -4,7 +4,7 @@ log_details:
   base_directory:
     main_directory: "artefacts"
     logs_directory: "logs"
-  file_name: "adk_engine"
+  file_name: "demo_engine"
   file_ext: ".log"
 
 config_details:

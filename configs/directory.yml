@@ -2,16 +2,16 @@ data:
   raw_data:
     base_directory: "artefacts/input/raw_data/"
     tables:
-      raw_data: "real_estate.csv"
+      raw_data: "dummy_data.csv"
   processed_data:
     base_directory: "artefacts/input/processed_data/"
     tables:
-      dummy_data: 'dummy_data.parquet'
+      dummy_data: "dummy_data.parquet"
   output_data:
     base_directory: "artefacts/output/"
     tables:
-      training_data: 'training_data.parquet'
-      predict_data: 'predict_data.parquet'
+      training_data: "training_data.parquet"
+      predict_data: "predict_data.parquet"
     dicts:
       fit_metrics: "fit_metrics.json"
     models:

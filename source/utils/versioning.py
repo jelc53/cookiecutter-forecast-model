@@ -5,8 +5,8 @@ import logging
 from typing import Dict
 from box import Box
 from datetime import datetime
-from ac_availability_core.constant.mapping import PIPELINES_MAPPING
-import ac_availability_core.constant.name as n
+from source.constant.mapping import PIPELINES_MAPPING
+import source.constant.name as n
 
 logger = logging.getLogger(__name__)
 
@@ -28,23 +28,18 @@ def get_versioning_in_config(run_info: Dict[str, str], config: Box) -> Box:
     config.run_details[n.F_RUN_VERSION] = (
         current_time if run_info[n.F_RUN_VERSION] is None else run_info[n.F_RUN_VERSION]
     )
-    if PIPELINES_MAPPING[run_info[n.F_PIPELINE]] == "processing":
+    if PIPELINES_MAPPING[run_info[n.F_PIPELINE]] == "data_processing":
         config.run_details[n.F_PROCESSED_DATA_VERSION] = (
             current_time if run_info[n.F_PROCESSED_DATA_VERSION] is None else run_info[n.F_PROCESSED_DATA_VERSION]
         )
-        config.run_details[n.F_RAW_DATA_VERSION] = (
-            get_latest_timestamp(config.data.raw_data.base_directory)
-            if run_info[n.F_RAW_DATA_VERSION] is None
-            else run_info[n.F_RAW_DATA_VERSION]
-        )
 
-    elif PIPELINES_MAPPING[run_info[n.F_PIPELINE]] == "modeling":
+    elif PIPELINES_MAPPING[run_info[n.F_PIPELINE]] == "forecast_model":
         config.run_details[n.F_PROCESSED_DATA_VERSION] = (
             get_latest_timestamp(config.data.processed_data.base_directory)
             if run_info[n.F_PROCESSED_DATA_VERSION] is None
             else run_info[n.F_PROCESSED_DATA_VERSION]
         )
-        config.run_details[n.F_RAW_DATA_VERSION] = run_info[n.F_RAW_DATA_VERSION]
+        
     return config
 
 

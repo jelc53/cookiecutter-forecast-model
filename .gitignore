@@ -113,12 +113,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# vscode
-.vscode/
-
-# pycharm
-.idea/
-
 # requirements.txt -- we use poetry for dependency management
 requirements.txt
 

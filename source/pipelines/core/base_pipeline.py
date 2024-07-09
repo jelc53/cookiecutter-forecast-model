@@ -1,8 +1,8 @@
 import logging
 from abc import ABC, abstractmethod
 from typing import Tuple, Dict
-from ac_availability_core.tasks.base_task import Task
-from ac_availability_core.utils.timing import timing
+from source.tasks.base_task import Task
+from source.utils.timing import timing
 
 
 logger = logging.getLogger(__name__)

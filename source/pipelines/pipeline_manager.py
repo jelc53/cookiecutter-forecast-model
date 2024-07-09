@@ -1,14 +1,12 @@
 from typing import Dict
 
-# Naive pipeline
-from ac_availability_core.pipelines.dummy_pipelines.dummy_processing_pipeline import DummyDataCubePipeline
-from ac_availability_core.pipelines.dummy_pipelines.dummy_modeling_pipeline import DummyModelingPipeline
+# import pipelines here
+from source.pipelines.core.data_processing_pipeline import DataProcessingPipeline
+from source.pipelines.core.forecast_model_pipeline import ForecastModelPipeline
+# from source.pipelines.core.optimisation_pipeline import OptimisationPipeline
 
-
-# DS Core pipelines to be implemented
-
-# Building a registry of known pipeline.
-PIPELINE_REGISTRY = {cls.name: cls for cls in [DummyDataCubePipeline, DummyModelingPipeline]}
+# build a registry of known pipeline.
+PIPELINE_REGISTRY = {cls.name: cls for cls in [DataProcessingPipeline, ForecastModelPipeline]}
 
 
 def run_pipeline(pipeline: str, config: Dict):

@@ -1,11 +1,11 @@
 import logging
 from typing import Dict
 
-from ac_availability_core.pipelines.core.base_pipeline import Pipeline
-from ac_availability_core.tasks.forecast_model.feature_engineering import FeatureEngineering
-from ac_availability_core.tasks.forecast_model.prepare_train_data import PrepareTrainData
-from ac_availability_core.tasks.forecast_model.fit_model import FitForecastModel
-from ac_availability_core.tasks.forecast_model.evaluate_model import EvaluateForecastModel
+from source.pipelines.core.base_pipeline import Pipeline
+from source.tasks.forecast_model.feature_engineering import FeatureEngineering
+from source.tasks.forecast_model.prepare_train_data import PrepareTrainData
+from source.tasks.forecast_model.fit_model import FitForecastModel
+from source.tasks.forecast_model.evaluate_model import EvaluateForecastModel
 
 logger = logging.getLogger(__name__)
 

@@ -1,12 +1,11 @@
 
 [tool.poetry]
-name = "ac-core"
+name = "source"
 version = "0.1.0"
-description = "BA aircraft availability forecasting project repository"
-license = "Copyright © 2023-2024 by Boston Consulting Group. All rights reserved"
+description = "Cookiecutter machine learning project repository"
 
 
-authors = ["Theophile Bourdillat", "Julian Cooper", "Caroline Pansard"]
+authors = ["Julian Cooper"]
 
 readme = "README.md"
 repository = "https://github.com/bcgx-pi-digitaltravel/ba-ac-availability-prediction"
