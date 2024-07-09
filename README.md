@@ -105,7 +105,7 @@ Data processing configuration :
     "args": [
         "--pipeline", "data_processing",
         "--config", "configs/run_details.yml",
-        "--config", "configs/directories.yml",
+        "--config", "configs/directory.yml",
         "--config", "configs/pipelines.yml",
         "--config", "configs/data_processing.yml",
         "--config", "configs/forecast_model.yml",
@@ -124,7 +124,7 @@ Step-by-step approach for adding a new task to the `data_processing` pipeline to
 
 1. Duplicate `process_data.py` within `source/tasks/data_processing` and rename the file and class appropriately (e.g. `process_data.py` becomes `merge_time_data.py` and `ProcessDataset` becomes `MergeTimeSeriesDatasets`). Also update the class name attribute to "evaluate_segmentation_metric".
    
-2. Create config for our new segmentation metric. To do this, we need to update `pipelines.yml` with our new task name, update `directories.yml` with output files we expect to generate, and update `data_processing.yml` with any user input variables we want to make available to the task (e.g. lags for correlations).
+2. Create config for our new segmentation metric. To do this, we need to update `pipelines.yml` with our new task name, update `directory.yml` with output files we expect to generate, and update `data_processing.yml` with any user input variables we want to make available to the task (e.g. lags for correlations).
    
 3. Add our new metric task to the `data_processing_pipeline.py` pipeline within `source/pipelines/core`. To do this you need to both import the class EvaluateSegmentation and include in the `get_tasks` method logic at the bottom of the file.
 

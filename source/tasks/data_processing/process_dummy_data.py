@@ -7,7 +7,7 @@ from source.utils.read_write import read_file, write_file
 from source.utils.transform import apply_schema, handle_datetime_dtype
 
 from source.schema.dummy_data import DummyData
-from source.constants import name as n
+from source.constant import name as n
 
 logger = logging.getLogger(__name__)
 

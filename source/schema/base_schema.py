@@ -8,7 +8,7 @@ import pandas as pd
 import pandera as pa
 
 
-class BaseSchema(pa.SchemaModel):
+class BaseSchema(): # pa.SchemaModel
     """Abstract Schema class defining the mandatory attributes and methods."""
 
     _label: str = "base"

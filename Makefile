@@ -39,7 +39,7 @@ data_processing:	## run the data processing pipeline
 			--pipeline data_processing \
 			--config configs/run_details.yml \
 			--config configs/pipelines.yml \
-			--config configs/directories.yml \
+			--config configs/directory.yml \
 			--config configs/data_processing.yml \
 			--config configs/forecast_model.yml \
 			--raw-data-version testing \
@@ -51,7 +51,7 @@ forecast_model:	## run the forecast pipeline
 			--pipeline forecast_model \
 			--config configs/run_details.yml \
 			--config configs/pipelines.yml \
-			--config configs/directories.yml \
+			--config configs/directory.yml \
 			--config configs/data_processing.yml \
 			--config configs/forecast_model.yml \
 			--processed-data-version testing \

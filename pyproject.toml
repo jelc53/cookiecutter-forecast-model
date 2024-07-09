@@ -26,6 +26,7 @@ python-box = "^7.2.0"
 arviz = "^0.18.0"
 unidecode = "^1.3.8"
 pandera = "^0.20.1"
+coloredlogs = "^15.0.1"
 
 
 [tool.poetry.group.dev.dependencies]

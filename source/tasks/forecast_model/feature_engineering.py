@@ -3,7 +3,7 @@ from typing import Dict
 
 import pandas as pd
 from source.tasks.base_task import Task
-from source.utils.data_loading_and_writing import read_file, write_file
+from source.utils.read_write import read_file, write_file
 
 from source.schema.dummy_data import DummyData
 
