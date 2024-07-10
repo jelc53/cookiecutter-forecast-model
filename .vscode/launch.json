@@ -8,7 +8,7 @@
             "name": "data processing",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/source/run.py",
+            "program": "${workspaceFolder}/abc_core/run.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {
@@ -30,7 +30,7 @@
             "name": "forecast model",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/source/run.py",
+            "program": "${workspaceFolder}/abc_core/run.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {

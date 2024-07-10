@@ -35,7 +35,7 @@ test:			## run tests
 
 data_processing:	## run the data processing pipeline
 	. venv/bin/activate \
-	    && python source/run.py \
+	    && python abc_core/run.py \
 			--pipeline data_processing \
 			--config configs/run_details.yml \
 			--config configs/pipelines.yml \
@@ -47,7 +47,7 @@ data_processing:	## run the data processing pipeline
 
 forecast_model:	## run the forecast pipeline
 	. venv/bin/activate \
-		&& python source/run.py
+		&& python abc_core/run.py
 			--pipeline forecast_model \
 			--config configs/run_details.yml \
 			--config configs/pipelines.yml \

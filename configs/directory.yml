@@ -2,14 +2,15 @@ data:
   raw_data:
     base_directory: "artefacts/input/raw_data/"
     tables:
-      dummy_data: "dummy_data.csv"
+      dummy_data: "raw_dummy_data.csv"
   processed_data:
     base_directory: "artefacts/input/processed_data/"
     tables:
-      dummy_data: "dummy_data.parquet"
+      dummy_data: "processed_dummy_data.parquet"
   output_data:
     base_directory: "artefacts/output/"
     tables:
+      feature_data: "feature_data.parquet"
       training_data: "training_data.parquet"
       predict_data: "predict_data.parquet"
     dicts:

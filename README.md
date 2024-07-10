@@ -76,7 +76,7 @@ The following details workarounds for known project issues:
 
 To run your project end-to-end :
 
-1. Unzip `artefacts` data folder and place at top-level directory (alongside `source`, `confgs`, etc.)
+1. Unzip `artefacts` data folder and place at top-level directory (alongside `abc_core`, `confgs`, etc.)
 2. Set configurations using `configs/[config].yml` files
 3. Run `make data_processing` and check `artefacts/input/processed_data/testing` folder is populated with processed data outputs
 4. Run `make forecast_model` and check `artefacts/output/forecast_model` is populated with forecasting outputs and fit metrics
@@ -95,7 +95,7 @@ Data processing configuration :
     "name": "data processing",
     "type": "debugpy",
     "request": "launch",
-    "program": "${workspaceFolder}/source/run.py",
+    "program": "${workspaceFolder}/abc_core/run.py",
     "console": "integratedTerminal",
     "justMyCode": true,
     "env": {
@@ -122,11 +122,11 @@ A complete working version of the `launch.json` is committed to the GitHub repo 
 
 Step-by-step approach for adding a new task to the `data_processing` pipeline to compute an additional commercial effectiveness metric (e.g. segmentation).
 
-1. Duplicate `process_data.py` within `source/tasks/data_processing` and rename the file and class appropriately (e.g. `process_data.py` becomes `merge_time_data.py` and `ProcessDataset` becomes `MergeTimeSeriesDatasets`). Also update the class name attribute to "evaluate_segmentation_metric".
+1. Duplicate `process_data.py` within `abc_core/tasks/data_processing` and rename the file and class appropriately (e.g. `process_data.py` becomes `merge_time_data.py` and `ProcessDataset` becomes `MergeTimeSeriesDatasets`). Also update the class name attribute to "evaluate_segmentation_metric".
    
 2. Create config for our new segmentation metric. To do this, we need to update `pipelines.yml` with our new task name, update `directory.yml` with output files we expect to generate, and update `data_processing.yml` with any user input variables we want to make available to the task (e.g. lags for correlations).
    
-3. Add our new metric task to the `data_processing_pipeline.py` pipeline within `source/pipelines/core`. To do this you need to both import the class EvaluateSegmentation and include in the `get_tasks` method logic at the bottom of the file.
+3. Add our new metric task to the `data_processing_pipeline.py` pipeline within `abc_core/pipelines/core`. To do this you need to both import the class EvaluateSegmentation and include in the `get_tasks` method logic at the bottom of the file.
 
 4. You should now be able to run the `data_processing` pipeline and it will create a output subfolder for your newly created metric! For this test run, we will have replicated the outputs from `process_data.py` since we duplicated that task as our starting point (we'll want to go ahead and delete that). 
    
