@@ -5,8 +5,8 @@ pipelines:
   forecast_model:
     tasks:
       feature_engineering: True
-      prepare_train_data: True
-      fit_model: True
+      prepare_data: True
+      train_model: True
       evaluate_model: True
   # optimisation:
   #   tasks:

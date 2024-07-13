@@ -3,7 +3,7 @@ from typing import Dict
 
 from abc_core.pipelines.core.base_pipeline import Pipeline
 from abc_core.tasks.forecast_model.feature_engineering import FeatureEngineering
-# from abc_core.tasks.forecast_model.prepare_train_data import PrepareTrainData
+from abc_core.tasks.forecast_model.prepare_data import PrepareTrainingData
 # from abc_core.tasks.forecast_model.fit_model import FitForecastModel
 # from abc_core.tasks.forecast_model.evaluate_model import EvaluateForecastModel
 
@@ -27,7 +27,7 @@ class ForecastModelPipeline(Pipeline):
         pipeline_config = config.pipelines.forecast_model.tasks
         return (
             (FeatureEngineering, pipeline_config.feature_engineering),
-            # (PrepareTrainData, pipeline_config.prepare_train_data),
+            (PrepareTrainingData, pipeline_config.prepare_data),
             # (FitForecastModel, pipeline_config.fit_model),
             # (EvaluateForecastModel, pipeline_config.evaluate_model),
         )

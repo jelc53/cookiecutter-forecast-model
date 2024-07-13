@@ -1,1 +1,15 @@
-ml_model:
+forecast_model:
+  model_type: 'ml_model'  # {'ml_model', 'bayesian'}
+  target: 'y_house_price_of_unit_area'
+
+  features:
+    numeric:
+      - 'x2_house_age'
+      - 'x3_distance_to_nearest_mrt_station'
+      - 'x7_haversine_distance'
+    categorical:
+      - # TODO: not yet implemented ! 
+
+  ml_model:
+
+  bayesian:

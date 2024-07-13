@@ -61,12 +61,16 @@ class FeatureEngineering(Task):
     def _create_features(self, df: pd.DataFrame) -> pd.DataFrame:
         """Orchestration method."""
         logger.info("Adding feature: haversine point combines lat and lng.")
-        df[n.F_HAVERSINE_POINT] = self.single_pt_haversine(lat=df[n.F_X5_LATITUDE], lng=df[n.F_X6_LONGITUDE])
+        df[n.F_X7_HAVERSINE_DISTANCE] = self.compute_haversine_distance(lat=df[n.F_X5_LATITUDE], lng=df[n.F_X6_LONGITUDE])
 
         # logger.info("Adding feature: [xx].")
         # NOTE: add new feature variables here!
         
         return df
+
+    def compute_haversine_distance(self, lat: pd.Series, lng: pd.Series) -> pd.Series:
+        """Apply haversine calculation to pandas series."""
+        return [self.single_pt_haversine(x, y) for x, y in zip(lat, lng)]
 
     def single_pt_haversine(self, lat, lng, degrees=True):
         """

@@ -9,12 +9,12 @@ data:
     base_directory: artefacts/output/
     dicts:
       fit_metrics: fit_metrics.json
+      train_data: train_data.pickle
     models:
       model: model.pickle
     tables:
       feature_data: feature_data.parquet
       predict_data: predict_data.parquet
-      training_data: training_data.parquet
   processed_data:
     base_directory: artefacts/input/processed_data/
     tables:
@@ -24,13 +24,24 @@ data:
     tables:
       dummy_data: raw_dummy_data.csv
 data_processing: null
+forecast_model:
+  bayesian: null
+  features:
+    categorical:
+    - null
+    numeric:
+    - x2_house_age
+    - x3_distance_to_nearest_mrt_station
+    - x7_haversine_distance
+  ml_model: null
+  model_type: ml_model
+  target: y_house_price_of_unit_area
 log_details:
   base_directory:
     logs_directory: logs
     main_directory: artefacts
   file_ext: .log
   file_name: demo_engine
-ml_model: null
 pipelines:
   data_processing:
     tasks:
@@ -39,8 +50,8 @@ pipelines:
     tasks:
       evaluate_model: true
       feature_engineering: true
-      fit_model: true
-      prepare_train_data: true
+      prepare_data: true
+      train_model: true
 run_details:
   pipeline: forecast_model
   processed_data_version: testing
