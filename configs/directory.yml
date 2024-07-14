@@ -16,4 +16,4 @@ data:
       train_data: "train_data.pickle"
       fit_metrics: "fit_metrics.json"
     models:
-      model: "model.pickle"
+      ml_model: "ml_model.pickle"

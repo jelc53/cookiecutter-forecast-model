@@ -5,9 +5,11 @@ pipelines:
   forecast_model:
     tasks:
       feature_engineering: True
-      prepare_data: True
-      train_model: True
-      evaluate_model: True
+      prepare_train_data: True
+      train_ml_model: True
+      # train_bayes_model: True
+      evaluate_ml_model: True
+      # evaluate_bayes_model: True
   # optimisation:
   #   tasks:
   #     prepare_data: True

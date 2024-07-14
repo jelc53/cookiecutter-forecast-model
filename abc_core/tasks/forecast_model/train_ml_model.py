@@ -9,10 +9,10 @@ from abc_core.utils.read_write import read_file, write_file
 logger = logging.getLogger(__name__)
 
 
-class EvaluateForecastModel(Task):
-    """Evaluate forecasting model using test set."""
+class TrainSklearnModel(Task):
+    """Fit sklearn ml model to training data."""
 
-    name = "evaluate_model"
+    name = "train_ml_model"
 
     def __init__(
         self,
@@ -24,24 +24,17 @@ class EvaluateForecastModel(Task):
         self.output_data = config.data.output_data
 
     def run(self):
-        model_tuned, train_data = self._load_inputs()
+        train_data = self._load_inputs()
 
-        metrics_dict = self._evaluate_metrics(model=model_tuned, data=train_data)
+        fit = self._train_model(data=train_data)
 
         self._save_results(fit_obj=fit)
 
-        return {"fit_metrics": metrics_dict}
+        return {"model_fit": fit}
 
-    def _load_inputs(self, **kwargs):
+    def _load_inputs(self, **kwargs) -> pd.DataFrame:
         """."""
         logger.info("Loading feature data table.")
-        model_tuned = read_file(
-            read_type="sklearn_model",
-            base_directory=self.input_data.base_directory,
-            pipeline_name=self.config.run_details.pipeline,
-            time_connector=self.config.run_details.run_version,
-            file_name=self.input_data.models.ml_model,
-        )
         train_data = read_file(
             read_type="python_dict",
             base_directory=self.input_data.base_directory,
@@ -49,29 +42,34 @@ class EvaluateForecastModel(Task):
             time_connector=self.config.run_details.run_version,
             file_name=self.input_data.dicts.train_data,
         )
-        return model_tuned, train_data
+        return train_data
 
-    def _save_results(self, metrics_dict: dict):
+    def _save_results(self, fit_obj):
         """."""
-        logger.info("Writing fit metrics to file.")
+        logger.info("Writing sklearn model fit object to file.")
         write_file(
-            out_obj=metrics_dict,
+            out_obj=fit_obj,
             base_directory=self.output_data.base_directory,
             pipeline_name=self.config.run_details.pipeline,
             time_connector=self.config.run_details.run_version,
-            file_name=self.output_data.dicts.fit_metrics,
+            file_name=self.output_data.models.ml_model,
         )
 
-    def _evaluate_metrics(self, model, data: pd.DataFrame):
+    def _train_model(self, data: pd.DataFrame):
         """Orchestration method."""
         X_train, X_test = data["X_train"], data["X_test"]
-        y_train_true, y_test_true = data["y_train"], data["y_test"]
+        y_train, y_test = data["y_train"], data["y_test"]
 
-        logger.info("Get predictions for the test set.")
-        y_test_pred = model_tuned.predict(X_test)
-        y_train_pred = model_tuned.predict(X_train)
+        logger.info("Hyperparameter tuning.")
+        model_config = self.config.forecast_model.ml_model
+        best_params, best_score = tune_hyperparameters(X_train=X_train, y_train=y_train, model_config=model_config)
 
-        logger.info("Calculate fit metrics.")
-        # ...
+        logger.info("Fit machine learning model.")
+        model_name = self.config.forecast_model.ml_model.model_name
+        model_tuned = get_model(model_params=best_params, model_name=model_name)
+        model_tuned.fit(X_train, y_train)
+
+        logger.info("Extract fit parameters from model.")
+        # TODO!
         
         return model_tuned

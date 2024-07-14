@@ -11,7 +11,7 @@ data:
       fit_metrics: fit_metrics.json
       train_data: train_data.pickle
     models:
-      model: model.pickle
+      ml_model: ml_model.pickle
     tables:
       feature_data: feature_data.parquet
       predict_data: predict_data.parquet
@@ -33,7 +33,64 @@ forecast_model:
     - x2_house_age
     - x3_distance_to_nearest_mrt_station
     - x7_haversine_distance
-  ml_model: null
+  ml_model:
+    hyperparameters:
+      cv: 10
+      n_iter: 10
+      random_state: 42
+      scoring: neg_mean_absolute_error
+      search_space:
+        random_forest:
+          max_depth:
+          - 3
+          - 4
+          - 5
+          - 6
+          max_samples:
+          - 0.5
+          - 0.7
+          - 0.9
+          min_samples_split:
+          - 2
+          - 4
+          - 6
+          n_estimators:
+          - 10
+          - 30
+          - 50
+          - 70
+          - 100
+          - 150
+        xgboost:
+          colsample_bytree:
+          - 0.5
+          - 0.6
+          - 0.7
+          - 0.8
+          - 0.9
+          eta:
+          - 0.01
+          - 0.05
+          - 0.1
+          - 0.2
+          max_depth:
+          - 3
+          - 4
+          - 5
+          - 6
+          n_estimators:
+          - 10
+          - 30
+          - 50
+          - 70
+          - 100
+          subsample:
+          - 0.5
+          - 0.6
+          - 0.7
+          - 0.8
+          - 0.9
+    model_name: xgboost
   model_type: ml_model
   target: y_house_price_of_unit_area
 log_details:
@@ -48,10 +105,10 @@ pipelines:
       process_dummy_data: true
   forecast_model:
     tasks:
-      evaluate_model: true
+      evaluate_ml_model: true
       feature_engineering: true
-      prepare_data: true
-      train_model: true
+      prepare_train_data: true
+      train_ml_model: true
 run_details:
   pipeline: forecast_model
   processed_data_version: testing
