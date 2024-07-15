@@ -11,7 +11,10 @@ data:
     base_directory: "artefacts/output/"
     tables:
       feature_data: "feature_data.parquet"
-      predict_data: "predict_data.parquet"
+      feature_importance: "feature_importance.parquet"
+      fit_params: "fit_params.parquet"
+      predict_train: "predict_train.parquet"
+      predict_test: "predict_test.parquet"
     dicts:
       train_data: "train_data.pickle"
       fit_metrics: "fit_metrics.json"

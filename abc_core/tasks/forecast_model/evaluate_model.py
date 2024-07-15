@@ -3,8 +3,8 @@ from typing import Dict, List, Tuple
 import pandas as pd
 
 from abc_core.tasks.base_task import Task
-from abc_core.utils.model_utils import get_model, tune_hyperparameters
 from abc_core.utils.read_write import read_file, write_file
+from abc_core.utils.evaluate import get_accuracy_metrics
 
 logger = logging.getLogger(__name__)
 
@@ -26,11 +26,11 @@ class EvaluateForecastModel(Task):
     def run(self):
         model_tuned, train_data = self._load_inputs()
 
-        metrics_dict = self._evaluate_metrics(model=model_tuned, data=train_data)
+        pred_train_df, pred_test_df, metrics = self._evaluate_metrics(model=model_tuned, data=train_data)
 
-        self._save_results(fit_obj=fit)
+        self._save_results(pred_train_df=pred_train_df, pred_test_df=pred_test_df, metrics=metrics)
 
-        return {"fit_metrics": metrics_dict}
+        return {"fit_metrics": metrics}
 
     def _load_inputs(self, **kwargs):
         """."""
@@ -51,27 +51,42 @@ class EvaluateForecastModel(Task):
         )
         return model_tuned, train_data
 
-    def _save_results(self, metrics_dict: dict):
+    def _save_results(self, metrics: dict, pred_train_df: pd.DataFrame, pred_test_df: pd.DataFrame):
         """."""
         logger.info("Writing fit metrics to file.")
         write_file(
-            out_obj=metrics_dict,
+            out_obj=metrics,
             base_directory=self.output_data.base_directory,
             pipeline_name=self.config.run_details.pipeline,
             time_connector=self.config.run_details.run_version,
             file_name=self.output_data.dicts.fit_metrics,
         )
+        write_file(
+            out_obj=pred_train_df,
+            base_directory=self.output_data.base_directory,
+            pipeline_name=self.config.run_details.pipeline,
+            time_connector=self.config.run_details.run_version,
+            file_name=self.output_data.tables.predict_train,
+        )
+        write_file(
+            out_obj=pred_test_df,
+            base_directory=self.output_data.base_directory,
+            pipeline_name=self.config.run_details.pipeline,
+            time_connector=self.config.run_details.run_version,
+            file_name=self.output_data.tables.predict_test,
+        )
 
-    def _evaluate_metrics(self, model, data: pd.DataFrame):
+    def _evaluate_metrics(self, model, data: pd.DataFrame, metrics: dict = {}):
         """Orchestration method."""
         X_train, X_test = data["X_train"], data["X_test"]
-        y_train_true, y_test_true = data["y_train"], data["y_test"]
+        y_train, y_test = data["y_train"], data["y_test"]
 
         logger.info("Get predictions for the test set.")
-        y_test_pred = model_tuned.predict(X_test)
-        y_train_pred = model_tuned.predict(X_train)
+        pred_train_df = pd.DataFrame({"y_true": y_train, "y_pred": model.predict(X_train)})
+        pred_test_df = pd.DataFrame({"y_true": y_test, "y_pred": model.predict(X_test)})
 
         logger.info("Calculate fit metrics.")
-        # ...
+        metrics = get_accuracy_metrics(metrics, pred_train_df, "train")
+        metrics = get_accuracy_metrics(metrics, pred_test_df, "test")
         
-        return model_tuned
+        return pred_train_df, pred_test_df, metrics
