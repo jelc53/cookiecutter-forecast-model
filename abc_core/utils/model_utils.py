@@ -28,8 +28,10 @@ def get_model(model_name: str, model_params: dict = None):
         else:
             model = XGBRegressor(**model_params)
     else:
-        raise NotImplementedError(f"ABC only supports \
-            random_forest and xgboost, got {model_name}.")
+        raise NotImplementedError(
+            f"ABC only supports \
+            random_forest and xgboost, got {model_name}."
+        )
     return model
 
 
@@ -50,7 +52,7 @@ def tune_hyperparameters(
         n_iter=hp_tuning_config.n_iter,
         cv=cv,
         return_train_score=True,
-        random_state=model_config.random_state,
+        # random_state=model_config.random_state,
     )
     gs.fit(X_train, y_train)
     best_params = gs.best_params_

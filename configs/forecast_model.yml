@@ -1,6 +1,8 @@
 forecast_model:
   model_type: 'ml_model'  # {'ml_model', 'bayesian'}
   target: 'y_house_price_of_unit_area'
+  test_split: 0.3
+  random_state: 42
 
   features:
     numeric:
@@ -13,7 +15,6 @@ forecast_model:
   ml_model:
     model_name: 'lin_reg' # {"lin_reg", "random_forest", "xgboost"} 
     scoring: 'neg_mean_absolute_error' # can be "r2", "neg_mean_absolute_error"
-    random_state: 42
     hyperparameters:
       cv_splits: 10  # default
       n_iter: 10  # default

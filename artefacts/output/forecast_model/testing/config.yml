@@ -106,10 +106,11 @@ forecast_model:
         - 0.8
         - 0.9
     model_name: lin_reg
-    random_state: 42
     scoring: neg_mean_absolute_error
   model_type: ml_model
+  random_state: 42
   target: y_house_price_of_unit_area
+  test_split: 0.3
 log_details:
   base_directory:
     logs_directory: logs
