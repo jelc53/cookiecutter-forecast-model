@@ -1,0 +1,47 @@
+config_details:
+  base_directory:
+    main_directory: artefacts
+    output_directory: output
+  file_ext: .yml
+  file_name: config
+data:
+  output_data:
+    base_directory: artefacts/output/
+    dicts:
+      fit_metrics: fit_metrics.json
+    models:
+      model: model.pickle
+    tables:
+      predict_data: predict_data.parquet
+      training_data: training_data.parquet
+  processed_data:
+    base_directory: artefacts/input/processed_data/
+    tables:
+      dummy_data: processed_dummy_data.parquet
+  raw_data:
+    base_directory: artefacts/input/raw_data/
+    tables:
+      dummy_data: raw_dummy_data.csv
+data_processing: null
+log_details:
+  base_directory:
+    logs_directory: logs
+    main_directory: artefacts
+  file_ext: .log
+  file_name: demo_engine
+ml_model: null
+pipelines:
+  data_processing:
+    tasks:
+      process_dummy_data: true
+  forecast_model:
+    tasks:
+      evaluate_model: true
+      feature_engineering: true
+      fit_model: true
+      prepare_train_data: true
+run_details:
+  pipeline: data_processing
+  processed_data_version: testing
+  raw_data_version: testing
+  run_version: '20240710_182902'

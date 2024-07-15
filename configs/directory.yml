@@ -1,0 +1,22 @@
+data:
+  raw_data:
+    base_directory: "artefacts/input/raw_data/"
+    tables:
+      dummy_data: "raw_dummy_data.csv"
+  processed_data:
+    base_directory: "artefacts/input/processed_data/"
+    tables:
+      dummy_data: "processed_dummy_data.parquet"
+  output_data:
+    base_directory: "artefacts/output/"
+    tables:
+      feature_data: "feature_data.parquet"
+      feature_importance: "feature_importance.parquet"
+      fit_params: "fit_params.parquet"
+      predict_train: "predict_train.parquet"
+      predict_test: "predict_test.parquet"
+    dicts:
+      train_data: "train_data.pickle"
+      fit_metrics: "fit_metrics.json"
+    models:
+      ml_model: "ml_model.pickle"

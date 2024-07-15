@@ -1,0 +1,15 @@
+run_details: {}  # data input version (needed for gamma data manager)
+
+log_details:
+  base_directory:
+    main_directory: "artefacts"
+    logs_directory: "logs"
+  file_name: "demo_engine"
+  file_ext: ".log"
+
+config_details:
+  base_directory:
+    main_directory: "artefacts"
+    output_directory: "output"
+  file_name: "config"
+  file_ext: ".yml" 

@@ -1,0 +1,134 @@
+config_details:
+  base_directory:
+    main_directory: artefacts
+    output_directory: output
+  file_ext: .yml
+  file_name: config
+data:
+  output_data:
+    base_directory: artefacts/output/
+    dicts:
+      fit_metrics: fit_metrics.json
+      train_data: train_data.pickle
+    models:
+      ml_model: ml_model.pickle
+    tables:
+      feature_data: feature_data.parquet
+      feature_importance: feature_importance.parquet
+      fit_params: fit_params.parquet
+      predict_test: predict_test.parquet
+      predict_train: predict_train.parquet
+  processed_data:
+    base_directory: artefacts/input/processed_data/
+    tables:
+      dummy_data: processed_dummy_data.parquet
+  raw_data:
+    base_directory: artefacts/input/raw_data/
+    tables:
+      dummy_data: raw_dummy_data.csv
+data_processing: null
+forecast_model:
+  bayesian:
+    fit_args:
+      adapt_delta: 0.9
+      chains: 1
+      max_treedepth: 12
+      n_jobs: 1
+      n_samples: 1000
+      n_warmup: 500
+      refresh: 200
+      seed: 3335
+    init_args:
+      x2_house_age: 0.0
+      x3_distance_to_nearest_mrt_station: 0.0
+      x7_haversine_distance: 0.0
+    model_name: lin_reg
+  features:
+    categorical:
+    - null
+    numeric:
+    - x2_house_age
+    - x3_distance_to_nearest_mrt_station
+    - x7_haversine_distance
+  ml_model:
+    hyperparameters:
+      cv_splits: 10
+      lin_reg: None
+      n_iter: 10
+      random_forest:
+        max_depth:
+        - 3
+        - 4
+        - 5
+        - 6
+        max_samples:
+        - 0.5
+        - 0.7
+        - 0.9
+        min_samples_split:
+        - 2
+        - 4
+        - 6
+        n_estimators:
+        - 10
+        - 30
+        - 50
+        - 70
+        - 100
+        - 150
+      xgboost:
+        colsample_bytree:
+        - 0.5
+        - 0.6
+        - 0.7
+        - 0.8
+        - 0.9
+        eta:
+        - 0.01
+        - 0.05
+        - 0.1
+        - 0.2
+        max_depth:
+        - 3
+        - 4
+        - 5
+        - 6
+        n_estimators:
+        - 10
+        - 30
+        - 50
+        - 70
+        - 100
+        subsample:
+        - 0.5
+        - 0.6
+        - 0.7
+        - 0.8
+        - 0.9
+    model_name: lin_reg
+    scoring: neg_mean_absolute_error
+  model_type: ml_model
+  random_state: 42
+  target: y_house_price_of_unit_area
+  test_split: 0.3
+log_details:
+  base_directory:
+    logs_directory: logs
+    main_directory: artefacts
+  file_ext: .log
+  file_name: demo_engine
+pipelines:
+  data_processing:
+    tasks:
+      process_dummy_data: true
+  forecast_model:
+    tasks:
+      evaluate_model: true
+      feature_engineering: true
+      prepare_train_data: true
+      train_ml_model: true
+run_details:
+  pipeline: forecast_model
+  processed_data_version: testing
+  raw_data_version: null
+  run_version: testing
